@@ -1,0 +1,16 @@
+services:
+  garmin-sync:
+    build: .
+    restart: unless-stopped
+    environment:
+      GARMIN_PERSONAL_API_KEY: ${GARMIN_PERSONAL_API_KEY:?required}
+      OPENATHLETE_URL: ${OPENATHLETE_URL:?required}
+      OPENATHLETE_EMAIL: ${OPENATHLETE_EMAIL:?required}
+      OPENATHLETE_PASSWORD: ${OPENATHLETE_PASSWORD:?required}
+      SYNC_INTERVAL_MINUTES: ${SYNC_INTERVAL_MINUTES:-30}
+      SYNC_LOOKBACK_DAYS: ${SYNC_LOOKBACK_DAYS:-14}
+      STATE_DB: /data/sync.sqlite3
+    volumes:
+      - garmin-sync-data:/data
+volumes:
+  garmin-sync-data:
